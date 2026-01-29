@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================= -->
+    <!-- NEW COMPLAINT FORM -->
+    <!-- ========================= -->
+    <template id="kprts_new_complaint_form" name="New Complaint">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h3 class="text-center mb-4">New Complaint</h3>
+
+                <form class="card shadow p-4"
+                      method="post"
+                      action="/online-complaints/submit"
+                      enctype="multipart/form-data">
+
+                    <input type="hidden"
+                           name="csrf_token"
+                           t-att-value="request.csrf_token()"/>
+
+                    <!-- ========================= -->
+                    <!-- COMPLAINANT DETAILS -->
+                    <!-- ========================= -->
+                    <h5>Complainant Details</h5>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Full Name *</label>
+                            <input type="text" name="complainant_name"
+                                   class="form-control" required="required"/>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Gender *</label>
+                            <select name="gender" class="form-select" required="required">
+                                <option value="">Nothing selected</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Contact Number *</label>
+                            <input type="text" name="mobile"
+                                   class="form-control" required="required"/>
+                        </div>
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- ID INFORMATION -->
+                    <!-- ========================= -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>ID Type *</label>
+                            <select name="id_type" class="form-select"
+                                    onchange="window.toggleIdFields(this.value)"
+                                    required="required">
+                                <option value="cnic">CNIC</option>
+                                <option value="passport">Passport</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3 cnic-field">
+                            <label>CNIC Number *</label>
+                            <input type="text" name="cnic" class="form-control"/>
+                        </div>
+
+                        <div class="col-md-4 mb-3 passport-field d-none">
+                            <label>Passport Number *</label>
+                            <input type="text" name="passport_number"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="row cnic-field">
+                        <div class="col-md-6 mb-3">
+                            <label>CNIC Front *</label>
+                            <input type="file" name="cnic_front" class="form-control"/>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>CNIC Back *</label>
+                            <input type="file" name="cnic_back" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="row passport-field d-none">
+                        <div class="col-md-6 mb-3">
+                            <label>Passport Bio Page *</label>
+                            <input type="file" name="passport_bio" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- LOCATION -->
+                    <!-- ========================= -->
+                    <h5 class="mt-4">Location Information</h5>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Province</label>
+                            <select name="province" class="form-select"
+                                    onchange="window.updateDistricts(this.value)">
+                                <option value="">Nothing selected</option>
+                                <option value="sindh">Sindh</option>
+                                <option value="punjab">Punjab</option>
+                                <option value="kpk">Khyber Pakhtunkhwa</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>District</label>
+                            <select name="district" id="districtSelect" class="form-select">
+                                <option value="">Nothing selected</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- DEPARTMENT -->
+                    <!-- ========================= -->
+                    <h5 class="mt-4">Department Particulars</h5>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Department *</label>
+                            <select name="department_notified" class="form-select"
+                                    onchange="window.updateServices(this.value)"
+                                    required="required">
+                                <option value="">Nothing selected</option>
+                                <option value="education">Education</option>
+                                <option value="health">Health</option>
+                                <option value="revenue">Revenue</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Notified Service *</label>
+                            <select name="notified_service"
+                                    id="serviceSelect"
+                                    class="form-select"
+                                    required="required">
+                                <option value="">Nothing selected</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- ========================= -->
+                    <!-- COMPLAINT DETAILS -->
+                    <!-- ========================= -->
+                    <h5 class="mt-4">Complaint Details</h5>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>First Appeal Filed?</label>
+                            <select name="first_appeal_filed"
+                                    class="form-select"
+                                    onchange="window.toggleFirstAppeal(this.value)">
+                                <option value="">Nothing selected</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3 d-none" id="firstAppealFile">
+                            <label>Copy of First Appeal</label>
+                            <input type="file"
+                                   name="first_appeal_copy"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Subject *</label>
+                        <input type="text" name="subject"
+                               class="form-control" required="required"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Complaint Description *</label>
+                        <textarea name="description"
+                                  class="form-control"
+                                  rows="5"
+                                  required="required"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Supporting Documents</label>
+                        <input type="file" name="supporting_documents"
+                               class="form-control" multiple="multiple"/>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary px-5">
+                            Submit Complaint
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ========================= -->
+            <!-- SAFE GLOBAL JS -->
+            <!-- ========================= -->
+            <script type="text/javascript">
+                window.toggleIdFields = function (value) {
+                    document.querySelectorAll(".cnic-field")
+                        .forEach(el => el.classList.toggle("d-none", value === "passport"));
+                    document.querySelectorAll(".passport-field")
+                        .forEach(el => el.classList.toggle("d-none", value !== "passport"));
+                };
+
+                window.toggleFirstAppeal = function (value) {
+                    const el = document.getElementById("firstAppealFile");
+                    if (el) el.classList.toggle("d-none", value !== "yes");
+                };
+
+                window.updateDistricts = function (province) {
+                    const map = {
+                        sindh: ["Karachi", "Hyderabad"],
+                        punjab: ["Lahore", "Rawalpindi"],
+                        kpk: ["Peshawar", "Abbottabad"]
+                    };
+                    const select = document.getElementById("districtSelect");
+                    select.innerHTML = '<option value="">Nothing selected</option>';
+                    (map[province] || []).forEach(d => {
+                        const o = document.createElement("option");
+                        o.value = d.toLowerCase();
+                        o.textContent = d;
+                        select.appendChild(o);
+                    });
+                };
+
+                window.updateServices = function (dept) {
+                    const map = {
+                        education: ["Admissions", "Scholarships"],
+                        health: ["Hospital Services", "Medicine Supply"],
+                        revenue: ["Land Record", "Property Tax"]
+                    };
+                    const select = document.getElementById("serviceSelect");
+                    select.innerHTML = '<option value="">Nothing selected</option>';
+                    (map[dept] || []).forEach(s => {
+                        const o = document.createElement("option");
+                        o.value = s.toLowerCase().replace(" ", "_");
+                        o.textContent = s;
+                        select.appendChild(o);
+                    });
+                };
+            </script>
+        </t>
+    </template>
+
+    <!-- ========================= -->
+    <!-- SUCCESS PAGE -->
+    <!-- ========================= -->
+    <template id="kprts_complaint_success" name="Complaint Submitted Successfully">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <div class="alert alert-success">
+                    <h3>Complaint Submitted Successfully</h3>
+                    <p>Your complaint number is:
+                        <strong t-esc="complaint_number"/>
+                    </p>
+                </div>
+                <a href="/online-complaints/track" class="btn btn-primary">
+                    Track Your Complaint
+                </a>
+            </div>
+        </t>
+    </template>
+
+</odoo>

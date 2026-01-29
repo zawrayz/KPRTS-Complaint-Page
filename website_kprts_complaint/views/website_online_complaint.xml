@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="online_complaints_page" name="Online Complaints Page">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="mb-3">Online Complaints</h1>
+
+                <p class="text-muted">
+                    This is the Online Complaints page.
+                    Complaint form will be added here.
+                </p>
+            </div>
+        </t>
+    </template>
+
+</odoo>

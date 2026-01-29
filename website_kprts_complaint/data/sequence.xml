@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_kprts_complaint" model="ir.sequence">
+            <field name="name">KPRTS Complaint</field>
+            <field name="code">kprts.complaint</field>
+            <field name="prefix">KPRTS-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

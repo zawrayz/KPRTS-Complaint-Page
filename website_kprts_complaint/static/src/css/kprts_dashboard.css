@@ -1,0 +1,65 @@
+/* ============================= */
+/* DASHBOARD WRAPPER – FINAL    */
+/* ============================= */
+
+.o_kprts_dashboard {
+    padding: 24px;
+
+    /* ✅ REAL HEIGHT + SCROLL */
+    height: calc(100vh + 350px);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* breathing room at bottom */
+    padding-bottom: 900px;
+}
+
+/* ============================= */
+/* KPI CARDS                    */
+/* ============================= */
+
+.kpi-card {
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.kpi-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.kpi-value {
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+/* ============================= */
+/* KPI COLORS                   */
+/* ============================= */
+
+.kpi-blue {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+}
+
+.kpi-orange {
+    background: linear-gradient(135deg, #fd7e14, #e8590c);
+    color: #000;
+}
+
+.kpi-yellow {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    color: #000;
+}
+
+.kpi-green {
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    color: #fff;
+}
+
+.kpi-red {
+    background: linear-gradient(135deg, #c62828, #8e0000);
+    color: #fff;
+}

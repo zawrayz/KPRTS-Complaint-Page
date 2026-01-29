@@ -1,0 +1,89 @@
+<odoo>
+
+    <!-- ========================= -->
+    <!-- Complaint List View -->
+    <!-- ========================= -->
+    <record id="view_kprts_complaint_list" model="ir.ui.view">
+        <field name="name">kprts.complaint.list</field>
+        <field name="model">kprts.complaint</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="complainant_name"/>
+                <field name="mobile"/>
+                <field name="subject"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- Complaint Form View -->
+    <!-- ========================= -->
+    <record id="view_kprts_complaint_form" model="ir.ui.view">
+        <field name="name">kprts.complaint.form</field>
+        <field name="model">kprts.complaint</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <!-- HEADER WITH WORKFLOW -->
+                <header>
+                    <button name="action_mark_in_progress"
+                            type="object"
+                            string="Mark In Progress"
+                            class="btn-primary"/>
+
+                    <button name="action_mark_disposed"
+                            type="object"
+                            string="Mark Disposed"
+                            class="btn-success"/>
+
+                    <button name="action_mark_rejected"
+                            type="object"
+                            string="Reject"
+                            class="btn-danger"/>
+
+                    <button name="action_reset_new"
+                            type="object"
+                            string="Reset to New"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="new,in_progress,disposed,rejected"/>
+                </header>
+
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- PERSONAL INFORMATION -->
+                    <group string="Personal Information">
+                        <group>
+                            <field name="complainant_name"/>
+                            <field name="father_name"/>
+                        </group>
+                        <group>
+                            <field name="gender"/> <!-- ✅ SAFE ADDITION -->
+                            <field name="cnic"/>
+                            <field name="mobile"/>
+                        </group>
+                    </group>
+
+                    <!-- COMPLAINT DETAILS -->
+                    <group string="Complaint Details">
+                        <field name="subject"/>
+                        <field name="description"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+<odoo>
+
+    <record id="view_kprts_complaint_search" model="ir.ui.view">
+        <field name="name">kprts.complaint.search</field>
+        <field name="model">kprts.complaint</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <!-- Basic search -->
+                <field name="name"/>
+                <field name="complainant_name"/>
+                <field name="mobile"/>
+                <field name="cnic"/>
+
+                <!-- SAFE SEARCH PANEL (Odoo 19) -->
+                <searchpanel>
+
+                    <field name="state"
+                           string="Status"
+                           icon="fa-flag"/>
+
+                    <field name="gender"
+                           string="Gender"
+                           icon="fa-user"/>
+
+                    <field name="province"
+                           string="Province"
+                           icon="fa-map"/>
+
+                    <field name="district"
+                           string="District"
+                           icon="fa-map-marker"/>
+
+                </searchpanel>
+
+            </search>
+        </field>
+    </record>
+
+</odoo>

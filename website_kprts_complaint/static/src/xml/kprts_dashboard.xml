@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <t t-name="kprts.Dashboard">
+
+        <div class="o_kprts_dashboard container-fluid kprts-scroll">
+
+            <!-- KPI ROW 1 -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="kpi-card kpi-blue">
+                        <div class="kpi-title">Total Complaints</div>
+                        <div class="kpi-value"><t t-esc="state.total"/></div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="kpi-card kpi-orange">
+                        <div class="kpi-title">Open Cases</div>
+                        <div class="kpi-value"><t t-esc="state.open"/></div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="kpi-card kpi-yellow">
+                        <div class="kpi-title">In Progress</div>
+                        <div class="kpi-value"><t t-esc="state.progress"/></div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="kpi-card kpi-green">
+                        <div class="kpi-title">Disposed</div>
+                        <div class="kpi-value"><t t-esc="state.disposed"/></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI ROW 2 -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="kpi-card kpi-green">
+                        <div class="kpi-title">Disposed within 60 Days</div>
+                        <div class="kpi-value"><t t-esc="state.disposed_within_60"/></div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="kpi-card kpi-red">
+                        <div class="kpi-title">Disposed beyond 60 Days</div>
+                        <div class="kpi-value"><t t-esc="state.disposed_beyond_60"/></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PIE ROW 1 -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5 class="text-center mb-3">Complaint Status</h5>
+                        <div style="height:320px">
+                            <canvas id="kprts_status_pie"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5 class="text-center mb-3">Disposed vs Total</h5>
+                        <div style="height:320px">
+                            <canvas id="kprts_total_pie"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PIE ROW 2 -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5 class="text-center mb-3">Gender Segregated Data</h5>
+                        <div style="height:320px">
+                            <canvas id="kprts_gender_pie"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ✅ NEW PIE -->
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5 class="text-center mb-3">
+                            Disposal Time Distribution
+                        </h5>
+                        <div style="height:320px">
+                            <canvas id="kprts_disposal_time_pie"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </t>
+
+</odoo>

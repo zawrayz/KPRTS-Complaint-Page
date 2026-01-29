@@ -1,0 +1,19 @@
+<odoo>
+
+    <menuitem id="menu_kprts_root"
+              name="KPRTS"
+              sequence="10"/>
+
+    <menuitem id="menu_kprts_dashboard"
+              name="Dashboard"
+              parent="menu_kprts_root"
+              action="action_kprts_dashboard"
+              sequence="1"/>
+
+    <menuitem id="menu_kprts_complaints"
+              name="Complaints"
+              parent="menu_kprts_root"
+              action="action_kprts_complaints"
+              sequence="2"/>
+
+</odoo>

@@ -1,0 +1,10 @@
+<odoo>
+
+    <!-- Complaints List Action -->
+    <record id="action_kprts_complaints" model="ir.actions.act_window">
+        <field name="name">Complaints</field>
+        <field name="res_model">kprts.complaint</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
