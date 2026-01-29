@@ -1,1 +1,0 @@
-from . import complaint_model
