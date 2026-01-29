@@ -1,0 +1,173 @@
+<odoo>
+    <data>
+
+        <record id="view_public_complaint_form" model="ir.ui.view">
+            <field name="name">public.complaint.form</field>
+            <field name="model">public.complaint</field>
+            <field name="arch" type="xml">
+                <form string="Public Complaint">
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                        
+                        <button name="action_start_investigation"
+                                type="object"
+                                string="Start Investigation"
+                                class="oe_highlight"
+                                invisible="status != 'draft'"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Complainant">
+                                <field name="complainant_name" placeholder="Full name"/>
+                                <field name="complainant_contact" placeholder="Phone or email"/>
+                                <field name="cnic" placeholder="Optional"/>
+                                <field name="gender"/>
+                            </group>
+                            <group string="Complaint">
+                                <field name="date_filed"/>
+                                <field name="priority"/>
+                                <field name="subject" placeholder="Short title"/>
+                                <field name="department"/>
+                            </group>
+                        </group>
+
+                        <group string="Location">
+                            <group>
+                                <field name="province"/>
+                                <field name="district"/>
+                            </group>
+                            <group>
+                                <field name="tehsil"/>
+                            </group>
+                        </group>
+
+                        <group string="Attachments">
+                            <field name="attachment" filename="attachment_name"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Details">
+                                <field name="description" placeholder="Describe the complaint in detail..."/>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_public_complaint_list" model="ir.ui.view">
+            <field name="name">public.complaint.list</field>
+            <field name="model">public.complaint</field>
+            <field name="arch" type="xml">
+                <list string="Complaints" default_order="date_filed desc">
+                    <field name="name"/> 
+                    <field name="complainant_name"/>
+                    <field name="complainant_contact"/>
+                    <field name="subject"/>
+                    <field name="department"/>
+                    <field name="priority"/>
+                    <field name="status" widget="badge"/>
+                    <field name="date_filed"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_public_complaint_kanban" model="ir.ui.view">
+            <field name="name">public.complaint.kanban</field>
+            <field name="model">public.complaint</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="status" class="o_kanban_small_column">
+                    <field name="name"/>
+                    <field name="subject"/>
+                    <field name="complainant_name"/>
+                    <field name="department"/>
+                    <field name="priority"/>
+                    <field name="date_filed"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_card">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted">
+                                            <field name="subject"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div>
+                                        <span class="text-muted">Complainant:</span>
+                                        <field name="complainant_name"/>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted">Department:</span>
+                                        <field name="department"/>
+                                    </div>
+                                    <div class="mt8">
+                                        <span class="badge">
+                                            <field name="priority"/>
+                                        </span>
+                                        <span class="text-muted ms-2">
+                                            <field name="date_filed"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+        <record id="view_public_complaint_search" model="ir.ui.view">
+    <field name="name">public.complaint.search</field>
+    <field name="model">public.complaint</field>
+    <field name="arch" type="xml">
+        <search string="Search Complaints">
+            <field name="name"/>
+            <field name="complainant_name"/>
+            <field name="subject"/>
+            <field name="department"/>
+            <field name="priority"/>
+            
+            <filter string="New" name="filter_draft" domain="[('status', '=', 'draft')]"/>
+            <filter string="Under Investigation" name="filter_investigating" domain="[('status', '=', 'investigating')]"/>
+            <filter string="Resolved" name="filter_resolved" domain="[('status', '=', 'resolved')]"/>
+            <filter string="Rejected" name="filter_rejected" domain="[('status', '=', 'rejected')]"/>
+            
+            <group expand="0" string="Group By">
+                <filter string="Status" name="group_status" context="{'group_by':'status'}"/>
+                <filter string="Department" name="group_department" context="{'group_by':'department'}"/>
+                <filter string="Priority" name="group_priority" context="{'group_by':'priority'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+        <record id="action_public_complaint" model="ir.actions.act_window">
+            <field name="name">Public Complaints</field>
+            <field name="res_model">public.complaint</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="view_id" ref="view_public_complaint_kanban"/>
+            <field name="search_view_id" ref="view_public_complaint_search"/>
+        </record>
+
+        <menuitem id="menu_complaint_root" name="Public Services" sequence="10"/>
+        <menuitem id="menu_complaint_main"
+                  name="Complaints"
+                  parent="menu_complaint_root"
+                  action="action_public_complaint"
+                  sequence="1"/>
+
+    </data>
+</odoo>
